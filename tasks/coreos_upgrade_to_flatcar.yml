@@ -6,5 +6,5 @@
   tasks:
   
   - name: files/flatcar_upgrade.sh 
-    script: ../files/flatcar_upgrade.sh  creates=/home/core/consoled.txt
+    script: ../files/bootstrap_pypy_for_ansible.sh  creates=/home/core/bootstrap_pypy_for_ansible.txt
     sudo: yes

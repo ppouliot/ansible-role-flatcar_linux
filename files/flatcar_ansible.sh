@@ -2,7 +2,7 @@
 LOGFILE='/home/core/install-pypy.log'
 
 exec >> $LOGFILE 2>&1
-PYPY_VERSION='pypy2-v5.9.0-linux64'
+PYPY_VERSION='pypy2-v6.0.0-linux64'
 HOME='/home/core'
 
 echo "Creating folders and downloading pypy binaries"

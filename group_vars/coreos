@@ -1,2 +1,2 @@
-ansible_ssh_user: coreos
+ansible_ssh_user: core
 ansible_python_interpreter: "/home/core/bin/python"

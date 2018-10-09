@@ -1,0 +1,7 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Upgrade CoreOS on Azure to Flatcar Linux Alpha (latest).
+  gather_facts: False
+  hosts: coreos
+  tasks:
+  - script: ../files/flatcar_ansible.sh  creates=/home/core/consoled-asible.txt

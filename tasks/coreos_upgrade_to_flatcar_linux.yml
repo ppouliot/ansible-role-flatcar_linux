@@ -1,10 +1,10 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Upgrade CoreOS on Azure to Flatcar Linux Alpha (latest).
-  gather_facts: False
-  hosts: flatcar
-  tasks:
+#- name: Upgrade CoreOS on Azure to Flatcar Linux Alpha (latest).
+#  gather_facts: False
+#  hosts: flatcar
+#  tasks:
   
-  - name: files/flatcar_upgrade.sh 
-    script: ../files/bootstrap_pypy_for_ansible.sh  creates=/home/core/bootstrap_pypy_for_ansible.txt
-    sudo: yes
+- name: files/flatcar_upgrade.sh 
+  script: ../files/bootstrap_pypy_for_ansible.sh  creates=/home/core/bootstrap_pypy_for_ansible.txt
+  sudo: yes

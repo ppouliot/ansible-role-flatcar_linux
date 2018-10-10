@@ -1,13 +1,8 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: Enable Azure Dynamic Inventory
-  gather_facts: False
-  hosts: localhost
-  tasks:
-  - name: Retrieve Azure's Dynamic Inventory Script.
-    get_url: 
-      url: "https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/azure_rm.py"
-      dest: "/usr/local/bin/azure_rm.py"
-      owner: "root"
-      group: "root"
-      mode: "0755"
+
+- name: Retrieve Azure's Dynamic Inventory Script.
+  get_url: 
+    url: "https://raw.githubusercontent.com/ansible/ansible/devel/contrib/inventory/azure_rm.py"
+    dest: "~/azure_rm.py"
+    mode: "0755"

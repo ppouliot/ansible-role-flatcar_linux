@@ -21,7 +21,7 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: ppouliot.flatcar-linux, x: 42 }
+         - { role: ppouliot.flatcar-linux }
 
 License
 -------

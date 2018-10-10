@@ -1,2 +1,0 @@
-ansible_ssh_user: root
-ansible_python_interpreter: "/home/core/bin/python"

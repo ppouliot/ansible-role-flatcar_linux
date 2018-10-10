@@ -1,4 +1,6 @@
 ---
 # tasks file for flatcar-linux
 import_tasks: bootstrap_pypy_for_ansible.yml
+#when: ansible_distribution ==  "Flatcar Linux by Kinvolk", 
 import_tasks: coreos_upgrade_to_flatcar_linux.yml
+#when: ansible_distribution ==  "Flatcar Linux by Kinvolk", 

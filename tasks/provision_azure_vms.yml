@@ -1,0 +1,131 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: Create Azure resources.
+  gather_facts: False
+  hosts: localhost
+  tasks:
+  
+  - name: Create an Azure resource group for running the Virtual Machines
+    azure_rm_resourcegroup:
+      name: FlatcarVMs
+      location: Eastus
+      tags:
+        testing: flatcar
+        delete: never
+
+  - name: Create an Azure Virtual Network (10.2.0.16/16)
+    azure_rm_virtualnetwork:
+      resource_group: FlatcarVMs
+      name: FlatcarVMNetwork001
+      address_prefixes: "10.2.0.0/16"
+
+  - name: Add subnet for Flatcar VMs to FlatcarVMNetwork
+    azure_rm_subnet:
+      resource_group: FlatcarVMs
+      name: FlatcarSubnet001
+      address_prefix: "10.2.1.0/24"
+      virtual_network: FlatcarVMNetwork001
+
+  - name: Create public IP address #1 for the FlatcarVMs
+    azure_rm_publicipaddress:
+      resource_group: FlatcarVMs
+      allocation_method: Static
+      name: FlatcarPublicIP001
+    register: output_ip_address
+
+  - name: Dump public IP 1 for flatcar2 VM  which will be created
+    debug:
+      msg: "The public IP #1 is {{ output_ip_address.state.ip_address }}."
+
+  - name: Create public IP address #2 for the FlatcarVMs
+    azure_rm_publicipaddress:
+      resource_group: FlatcarVMs
+      allocation_method: Static
+      name: FlatcarPublicIP002
+    register: output_ip_address
+
+  - name: Dump public IP 2 for flatcar2 VM  which will be created
+    debug:
+      msg: "The public IP #2 is {{ output_ip_address.state.ip_address }}."
+
+  - name: Create Network Security Group that allows SSH to the FlatcarVMs
+    azure_rm_securitygroup:
+      resource_group: FlatcarVMs
+      name: FlatcarNetworkSecurityGroup001
+      rules:
+        - name: SSH
+          protocol: Tcp
+          destination_port_range: 22
+          access: Allow
+          priority: 1001
+          direction: Inbound
+
+        - name: HTTP
+          protocol: Tcp
+          destination_port_range: 80
+          access: Allow
+          priority: 1002
+          direction: Inbound
+
+        - name: HTTPS
+          protocol: Tcp
+          destination_port_range: 443
+          access: Allow
+          priority: 1003
+          direction: Inbound
+
+  - name: Create NIC #1
+    azure_rm_networkinterface:
+      resource_group: FlatcarVMs
+      name: FlatcarNIC001
+      virtual_network: FlatcarVMNetwork001
+      subnet: FlatcarSubnet001
+      public_ip_name: FlatcarPublicIP001
+      security_group: FlatcarNetworkSecurityGroup001
+
+  - name: Create NIC #2
+    azure_rm_networkinterface:
+      resource_group: FlatcarVMs
+      name: FlatcarNIC002
+      virtual_network: FlatcarVMNetwork001
+      subnet: FlatcarSubnet001
+      public_ip_name: FlatcarPublicIP002
+      security_group: FlatcarNetworkSecurityGroup001
+
+  - name: Creating VirtualMachine Flatcar1
+    azure_rm_virtualmachine:
+      resource_group: FlatcarVMs
+      name: flatcar1
+      vm_size: Standard_B1ms
+      managed_disk_type: Premium_LRS
+      admin_username: core
+      admin_password: Fl@tc@rL1nux
+      ssh_password_enabled: true
+      ssh_public_keys:
+        - path: "/home/core/.ssh/authorized_keys"
+          key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlZLcFVYcMbYkJ+pwSsTnfOfwmOLZe26J6PBHa/17ZuzBI563BWJfTybjgphVOJwQKAqN+cBfzHZ66PaQm0vqx2Efee1uGq/vd8cmAIyEqmZUnbkxPRQ3G7YLlAwqZalRo2TEglWhEK+O+7hycV3NhCKYpG/2DZwGbW97bKh01R3R0pt9PiSi570w4W4oeUxPioqR/dIJf+g4EnOCnPMvLAT6exGI9hcKCRH3604Qnh2z5rQ0aG4PYS8uCi5MS8AevuWxNg7OKE6e59XxDvruULq+4jerAls+HZVomZ2AQvbcabpqKFEKvVtE12k5uzAWelmZU49NCIHuUgrX5hm0X peter@hackintosh.local
+      network_interfaces: FlatcarNIC001
+      image:
+        offer: CoreOS
+        publisher: CoreOS
+        sku: 'alpha'
+        version: latest
+
+  - name: Creating VirtualMachine Flatcar2
+    azure_rm_virtualmachine:
+      resource_group: FlatcarVMs
+      name: flatcar2
+      vm_size: Standard_B1ms
+      managed_disk_type: Premium_LRS
+      admin_username: core
+      admin_password: Fl@tc@rL1nux
+      ssh_password_enabled: true
+      ssh_public_keys: 
+        - path: "/home/core/.ssh/authorized_keys"
+          key_data: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlZLcFVYcMbYkJ+pwSsTnfOfwmOLZe26J6PBHa/17ZuzBI563BWJfTybjgphVOJwQKAqN+cBfzHZ66PaQm0vqx2Efee1uGq/vd8cmAIyEqmZUnbkxPRQ3G7YLlAwqZalRo2TEglWhEK+O+7hycV3NhCKYpG/2DZwGbW97bKh01R3R0pt9PiSi570w4W4oeUxPioqR/dIJf+g4EnOCnPMvLAT6exGI9hcKCRH3604Qnh2z5rQ0aG4PYS8uCi5MS8AevuWxNg7OKE6e59XxDvruULq+4jerAls+HZVomZ2AQvbcabpqKFEKvVtE12k5uzAWelmZU49NCIHuUgrX5hm0X peter@hackintosh.local
+      network_interfaces: FlatcarNIC002
+      image:
+        offer: CoreOS
+        publisher: CoreOS
+        sku: 'alpha'
+        version: latest

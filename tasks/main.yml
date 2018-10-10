@@ -1,5 +1,7 @@
 ---
 # tasks file for flatcar-linux
+import_tasks: provision_azure_coreos_virtual_machines.yml
+import_tasks: azure_dynamic_inventory_script.yml
 import_tasks: bootstrap_pypy_for_ansible.yml
 #when: ansible_distribution ==  "Flatcar Linux by Kinvolk", 
 import_tasks: coreos_upgrade_to_flatcar_linux.yml

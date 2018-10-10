@@ -1,0 +1,6 @@
+---
+# defaults file for flatcar-linux
+
+ansible_ssh_user: core
+ansible_python_interpreter: "/home/core/bin/python"
+python2_version: 6.0.0

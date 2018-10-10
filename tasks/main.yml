@@ -1,0 +1,4 @@
+---
+# tasks file for flatcar-linux
+import_tasks: bootstrap_pypy_for_ansible.yml
+import_tasks: coreos_upgrade_to_flatcar_linux.yml

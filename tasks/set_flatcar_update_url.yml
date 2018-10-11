@@ -2,6 +2,6 @@
 ---
 
 - name: Setting the Flatcar Linux update url in /etc/coreos/update.conf
-  command: 'echo 'SERVER=https://public.update.flatcar-linux.net/v1/update/' >> /etc/coreos/update.conf"
+  command: "echo 'SERVER=https://public.update.flatcar-linux.net/v1/update/' >> /etc/coreos/update.conf"
   sudo: yes
 

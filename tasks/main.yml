@@ -3,11 +3,11 @@
 
 - name: Use localhost to provision Azure virtual machines
   include_tasks: provision_azure_coreos_virtual_machines.yml
-  delegate_to: localhost
+  when: inventory_hostname == "localhost"
 
 - name: Download and Install Azure dynamic inventory script
   include_tasks: azure_dynamic_inventory_script.yml
-  delegate_to: localhost
+  when: inventory_hostname == "localhost"
 
 - include_tasks: bootstrap_pypy_for_ansible.yml
   when: ansible_distribution == "Container Linux by CoreOS"

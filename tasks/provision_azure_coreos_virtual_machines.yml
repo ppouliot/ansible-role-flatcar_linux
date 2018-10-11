@@ -26,7 +26,7 @@
     address_prefix: "10.2.1.0/24"
     virtual_network: FlatcarVMNetwork001
 
-- name: Create public IP address #1 for the FlatcarVMs
+- name: Create first public IP address for the virtual machine flatcar1.
   azure_rm_publicipaddress:
     resource_group: FlatcarVMs
     allocation_method: Static
@@ -37,7 +37,7 @@
   debug:
     msg: "The public IP #1 is {{ output_ip_address.state.ip_address }}."
 
-- name: Create public IP address #2 for the FlatcarVMs
+- name: Create second public IP address for the virtual machine flatcar2.
   azure_rm_publicipaddress:
     resource_group: FlatcarVMs
     allocation_method: Static
@@ -74,7 +74,7 @@
         priority: 1003
         direction: Inbound
 
-- name: Create NIC #1
+- name: Creating first virtual network interface. 
   azure_rm_networkinterface:
     resource_group: FlatcarVMs
     name: FlatcarNIC001
@@ -83,7 +83,7 @@
     public_ip_name: FlatcarPublicIP001
     security_group: FlatcarNetworkSecurityGroup001
 
-- name: Create NIC #2
+- name: Creating second virtual network interface.
   azure_rm_networkinterface:
     resource_group: FlatcarVMs
     name: FlatcarNIC002
@@ -129,5 +129,3 @@
       publisher: CoreOS
       sku: 'alpha'
       version: latest
-
-

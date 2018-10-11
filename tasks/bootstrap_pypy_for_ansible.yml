@@ -1,8 +1,9 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name:  Bootstrapping PYPY on CoreOS/Flatcar for Ansible.
+
+#- name: Bootstrapping PYPY on CoreOS/Flatcar for Ansible.
 #  gather_facts: False
 #  hosts: coreos
 #  tasks:
-#  - script: ../files/bootstrap_pypy_for_ansible.sh  creates=/home/core/bootstrap-pypy-for-asible.txt
+- name: Bootstrapping PYPY on CoreOS/Flatcar for Ansible.
   script: ../files/bootstrap_pypy_for_ansible.sh  creates=/home/core/bootstrap-pypy-for-asible.txt

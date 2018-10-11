@@ -1,10 +1,5 @@
 #!/usr/bin/env ansible-playbook
 ---
-#- name: Create Azure resources for deploying two CoreOS virtual machine instances which will be upgraded to Flatcar Linux
-#  gather_facts: False
-# hosts: localhost
-#  tasks:
-
 - name: Create an Azure resource group for running the Virtual Machines
   azure_rm_resourcegroup:
     name: FlatcarVMs

@@ -9,10 +9,27 @@
   when: inventory_hostname == "localhost"
 
 - include_tasks: bootstrap_pypy_for_ansible.yml
+#  when: ansible_distribution == "Container Linux by CoreOS"
+
+- include_tasks: configure_passwordless_sudo_for_core_user.yml
   when: ansible_distribution == "Container Linux by CoreOS"
 
-- include_tasks: coreos_upgrade_to_flatcar_linux.yml
+- include_tasks: install_flatcar_public_key.yml
   when: ansible_distribution == "Container Linux by CoreOS"
+
+- include_tasks: set_flatcar_update_url.yml
+  when: ansible_distribution == "Container Linux by CoreOS"
+
+- include_tasks: clear_release_version.yml
+  when: ansible_distribution == "Container Linux by CoreOS" or ansible_distribution == "Flatcar Linux by Kinvolk"
+
+
+- include_tasks: restart_update_enginel.yml
+  when: ansible_distribution == "Container Linux by CoreOS" or ansible_distribution == "Flatcar Linux by Kinvolk"
+
+- include_tasks: coreos_upgrade_to_flatcar_linux.yml
+  when: ansible_distribution == "Container Linux by CoreOS" or ansible_distribution == "Flatcar Linux by Kinvolk"
+
 
 #- include_tasks: flatcar_execute_cloudinit.yml
 #when: ansible_distribution ==  "Flatcar Linux by Kinvolk", 

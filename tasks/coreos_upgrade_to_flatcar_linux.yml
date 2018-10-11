@@ -1,5 +1,5 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: files/flatcar_upgrade.sh 
-  script: ../files/bootstrap_pypy_for_ansible.sh  creates=/home/core/bootstrap_pypy_for_ansible.txt
+- name: Run manual upgrade using 'update_engine_client -update'
+  command: "update_engine_client -update"
   sudo: yes

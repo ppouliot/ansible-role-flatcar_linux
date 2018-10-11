@@ -1,0 +1,7 @@
+#!/usr/bin/env ansible-playbook
+---
+
+- name: Restarting the Update engine for {{ ansible_distribution }}.
+  service:
+    name: update-engine
+    state: restarted

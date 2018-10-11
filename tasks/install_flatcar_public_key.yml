@@ -9,3 +9,4 @@
 
 - name: Mountingthe Flatcar Linux Public Update Key to /usr/share/update_engine/udate-payload-key.pub.pem.
   command: "mount --bind /tmp/key /usr/share/update_engine/update-payload-key.pub.pem"
+  sudo: yes

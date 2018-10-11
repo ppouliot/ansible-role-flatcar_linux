@@ -4,7 +4,7 @@
 - name: Get the Flatcar Linux Public Update Key.
   get_url: 
     url: "https://raw.githubusercontent.com/flatcar-linux/coreos-overlay/flatcar-master/coreos-base/coreos-au-key/files/official-v2.pub.pem"
-    dest: "/tmp/key"~
+    dest: "/tmp/key"
     mode: "0644"
 
 - name: Mountingthe Flatcar Linux Public Update Key to /usr/share/update_engine/udate-payload-key.pub.pem.

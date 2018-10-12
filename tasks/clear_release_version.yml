@@ -1,17 +1,19 @@
 #!/usr/bin/env ansible-playbook
 ---
-
-
-- name: Copy the current release file to /tmp/release for adjustments
+- name: Copy the current release file to tmp
   copy:
-    src: '/usr/share/coreos/release'
-    dest: '/tmp/release'
-    mode: 0644
+    src: /usr/share/coreos/release
+    dest: /tmp/release
+    remote_src: yes
+  sudo: yes
 
 - name: Clearing the current version number from the release file
-  command: 'sed -i "/COREOS_RELEASE_VERSION/c\COREOS_RELEASE_VERSION\=0.0.0" /tmp/release'
+  lineinfile:
+    path: /tmp/release
+    regexp: '/COREOS_RELEASE_VERSION'
+    line: 'COREOS_RELEASE_VERSION=0.0.0'
   sudo: yes
 
 - name: Mount the release file from /tmp/release to /usr/share/coreos/release
-  command "mount --bind /tmp/release /usr/share/coreos/release"
+  command: "mount --bind /tmp/release /usr/share/coreos/release"
   sudo: yes

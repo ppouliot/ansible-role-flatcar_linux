@@ -8,8 +8,9 @@
   include_tasks: azure_dynamic_inventory_script.yml
   when: inventory_hostname == "localhost"
 
-- include_tasks: bootstrap_pypy_for_ansible.yml
-#  when: ansible_distribution == "Container Linux by CoreOS"
+# Moved to container-linux.bootstrap
+#- include_tasks: bootstrap_pypy_for_ansible.yml
+#  when: ansible_distribution == "Container Linux by CoreOS" or ansible_distribution == "Flatcar Linux by Kinvolk"
 
 - include_tasks: configure_passwordless_sudo_for_core_user.yml
   when: ansible_distribution == "Container Linux by CoreOS"
@@ -24,7 +25,7 @@
   when: ansible_distribution == "Container Linux by CoreOS" or ansible_distribution == "Flatcar Linux by Kinvolk"
 
 
-- include_tasks: restart_update_enginel.yml
+- include_tasks: restart_update_engine.yml
   when: ansible_distribution == "Container Linux by CoreOS" or ansible_distribution == "Flatcar Linux by Kinvolk"
 
 - include_tasks: coreos_upgrade_to_flatcar_linux.yml

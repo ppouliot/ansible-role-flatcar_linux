@@ -144,4 +144,4 @@ six==1.11.0
 tabulate==0.8.2
 tornado==4.5.3
 typing==3.6.6
-urllib3==1.23
+urllib3==1.26.5

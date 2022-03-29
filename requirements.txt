@@ -125,7 +125,7 @@ msrest==0.4.29
 msrestazure==0.4.31
 oauthlib==2.1.0
 packaging==18.0
-paramiko==2.4.2
+paramiko==2.10.1
 pathlib2==2.3.2
 pyasn1==0.4.4
 pycparser==2.19
